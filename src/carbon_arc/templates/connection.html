@@ -1,0 +1,16 @@
+{#- Connection, at admin: the data role's (meridian/roles/data/connection.html),
+    with Carbon Arc's nuance at its blocks only -- the head's status; a notice
+    naming carbon_arc_api_key while it is unset; the frameworks kept current
+    and the answers kept as rows of "Key"; and the pace as a row of "Limits
+    and use". Carbon Arc is polled, so the role draws no "Sessions". Whether
+    the key is set is said; its value never is. No panel's values. -#}
+{% extends "meridian/roles/data/connection.html" %}
+{% import "meridian/kit.html" as kit %}
+{% block status %}{{ kit.status({"state": data.state, "label": data.said, "detail": detail, "at": data.checked_at, "at_label": "Last checked"}) }}{% endblock %}
+{% block vendor_notices %}{% if data.waiting %}<div class="notice warn" role="status" data-waiting>Waiting: {{ data.waiting }}. Enter your firm's own Carbon Arc API key in Settings. Nothing is asked of Carbon Arc until it is set.</div>{% endif %}{% endblock %}
+{% block vendor_rows %}{% if section == "Key" and data.mode != "No key" %}
+<tr data-frameworks><th scope="row">Frameworks</th><td>{{ data.frameworks_kept }} kept current, read only</td><td></td></tr>
+<tr data-kept><th scope="row">Answers kept</th><td>{% if data.keeping %}{{ data.responses_kept }}{% if data.kept_for %}, {{ data.kept_for }}{% endif %}{% else %}None: {{ data.kept_for }}{% endif %}</td><td></td></tr>
+{% elif section == "Limits and use" %}
+<tr data-pace><th scope="row">Pace</th><td>{{ data.per_minute }} requests a minute at most{% if data.rate_limited %}; Carbon Arc refused {{ data.rate_limited }}, each followed by a pause{% endif %}</td><td></td></tr>
+{% endif %}{% endblock %}

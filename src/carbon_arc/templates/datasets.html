@@ -1,0 +1,14 @@
+{#- Datasets, at admin: the data role's (meridian/roles/data/datasets.html),
+    in its order and words, with Carbon Arc's nuance at its blocks only: a
+    notice saying why no dataset is served yet, and "Terms". No panel's
+    values. -#}
+{% extends "meridian/roles/data/datasets.html" %}
+{% import "meridian/kit.html" as kit %}
+{% block status %}{{ kit.status({"state": state[0], "label": state[1], "detail": state[2], "at": checked_at, "at_label": "Last checked"}) }}{% endblock %}
+{% block vendor_notices %}<div class="notice info" role="status" data-not-yet>{{ data.not_yet }}</div>{% endblock %}
+{% block vendor_sections %}
+<section class="panel">
+<h2>Terms</h2>
+<p>{{ data.terms }}</p>
+</section>
+{% endblock %}

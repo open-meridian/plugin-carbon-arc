@@ -1,0 +1,39 @@
+{#- Frameworks, at admin: Carbon Arc's own page. Each purchased framework the
+    firm named, its state, insight and mapping version; then each entity they
+    measure, by Carbon Arc's ID, with its ticker and the instrument it
+    resolved to, or why none. Read only, and no panel's values. -#}
+{% extends "meridian/base.html" %}
+{% import "meridian/kit.html" as kit %}
+{% block status %}{{ kit.status({"state": state[0], "label": state[1], "detail": state[2], "at": checked_at, "at_label": "Last checked"}) }}{% endblock %}
+{% block content %}
+{% if data.unread %}<div class="notice warn" role="status" data-unread>A row of Purchased frameworks is not a framework ID, so nothing is read for it: {{ data.unread|join("; ") }}</div>{% endif %}
+<section class="panel">
+<h2>Purchased frameworks</h2>
+<p class="hint">Read only: this plugin never prices or buys a framework.{% if data.version %} Entity mapping {{ data.version }}.{% endif %}</p>
+{% if data.frameworks %}
+<om-pager><table class="one-line">
+<thead><tr><th>Framework</th><th>State</th><th class="wide-only">Insight</th><th class="num">Entities</th><th class="more"><span class="visually-hidden">Details</span></th></tr></thead><tbody>
+{% for f in data.frameworks %}
+<tr data-framework="{{ f.framework_id }}"><td><code>{{ f.framework_id }}</code></td><td>{% if f.state == "Held" %}{{ f.state }}{% else %}<span class="badge warn">{{ f.state }}</span>{% endif %}</td><td class="wide-only">{{ f.insight or "Not stated" }}</td><td class="num">{{ f.entities|length }}</td>
+<td class="more"><details class="row-detail" name="frameworks"><summary aria-label="Details of {{ f.framework_id }}">…</summary><div class="row-detail-pop"><h3>{{ f.framework_id }}</h3><dl><dt>State</dt><dd>{{ f.state }}</dd><dt>Insight</dt><dd>{{ f.insight or "Not stated" }}</dd><dt>Aggregation</dt><dd>{{ f.aggregate or "Not stated" }}</dd><dt>Entity mapping</dt><dd>{{ f.version or "Not stated" }}</dd><dt>Entities</dt><dd>{{ f.entities|join(", ") if f.entities else "None read" }}</dd><dt>Last read</dt><dd>{{ (f.read_at|moment) if f.read_at else "Not yet" }}</dd><dt>Last error</dt><dd>{{ f.last_error or "None" }}</dd></dl></div></details></td></tr>
+{% endfor %}
+</tbody></table></om-pager>
+{% else %}
+<div class="empty-state"><strong>No frameworks read yet</strong><p>Name the frameworks your firm has bought in Settings, one framework ID per row.</p></div>
+{% endif %}
+</section>
+<section class="panel">
+<h2>Entities</h2>
+<p class="hint">{{ data.resolved }} resolved to an instrument, {{ data.unresolved }} not resolved, {{ data.other_kinds }} of a kind the platform does not hold yet.</p>
+{% if data.entities %}
+<om-pager search="Search entities"><table class="one-line">
+<thead><tr><th class="num">Carbon Arc ID</th><th>Name</th><th class="wide-only">Ticker</th><th>Instrument</th></tr></thead><tbody>
+{% for e in data.entities %}
+<tr data-entity="{{ e.carc_id }}"><td class="num">{{ e.carc_id }}</td><td>{{ e.name or e.representation }}</td><td class="wide-only">{{ e.ticker or "None" }}</td><td>{% if e.instrument_id %}<code>{{ e.instrument_id }}</code>{% else %}<span class="badge warn">{{ e.miss or "Not resolved yet" }}</span>{% endif %}</td></tr>
+{% endfor %}
+</tbody></table></om-pager>
+{% else %}
+<div class="empty-state"><strong>No entities read yet</strong></div>
+{% endif %}
+</section>
+{% endblock %}

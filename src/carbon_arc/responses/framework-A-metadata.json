@@ -1,0 +1,32 @@
+{
+  "framework_id": "3f2b8c1e-5d4a-4b6e-9f10-2a7c8d9e0f11",
+  "framework": {
+    "entities": [
+      {
+        "carc_id": 900001,
+        "representation": "ticker"
+      },
+      {
+        "carc_id": 900002,
+        "representation": "ticker"
+      },
+      {
+        "carc_id": 900003,
+        "representation": "ticker"
+      }
+    ],
+    "insight": {
+      "insight_id": 248
+    },
+    "filters": {
+      "location_resolution": "us",
+      "date_resolution": "day",
+      "date_range": {
+        "start_date": "2025-01-01",
+        "end_date": "2026-10-31"
+      }
+    },
+    "aggregate": "sum"
+  },
+  "ontology_version": "v2026.10.2"
+}

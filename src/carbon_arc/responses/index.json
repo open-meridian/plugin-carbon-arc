@@ -1,0 +1,11 @@
+{
+  "about": "Fictitious frameworks and entities in the shapes Carbon Arc's Python SDK builds and its ontology documentation shows (an entity's carc_id, carc_name, representation, ticker, sector, industry). The framework metadata and mapping-version shapes are not published; these follow the SDK's framework payload (entities, insight, filters, aggregate). No real company, framework or data.",
+  "answers": {
+    "/v2/framework/3f2b8c1e-5d4a-4b6e-9f10-2a7c8d9e0f11/metadata": "framework-A-metadata.json",
+    "/v2/framework/9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d/metadata": "framework-B-metadata.json",
+    "/v2/ontology/entities/900001?entity_representation=ticker": "entity-900001.json",
+    "/v2/ontology/entities/900002?entity_representation=ticker": "entity-900002.json",
+    "/v2/ontology/entities/900003?entity_representation=ticker": "entity-900003.json",
+    "/v2/ontology/ontology-versions": "ontology-versions.json"
+  }
+}
